@@ -6,7 +6,6 @@ import Data.Text
 import Control.Applicative
 import Control.Monad
 import qualified Data.ByteString.Lazy as B
-import Network.HTTP.Conduit (simpleHttp)
 import GHC.Generics
 import GHC.List (sum)
 import Data.Foldable (Foldable, foldr, foldl, sum)
