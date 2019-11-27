@@ -1,6 +1,8 @@
 {-# LANGUAGE OverloadedStrings, DeriveGeneric #-}
 
-module ProjetoFuncional20192 (module Prelude,  module Data.Foldable) where
+module Crud (Transaction(..), GregorianCalendar(..), module Prelude,  module Data.Foldable) where
+
+import Test.Hspec
 import Data.Aeson
 import Data.Text
 import Control.Applicative
@@ -199,9 +201,10 @@ pegaTodasAsReceitasDoAno ano dado = [(valor x) | x <- dado, ( year (dataC x)) ==
 pegaTodasAsDespesasDoAno ano dado =  [(valor x) | x <- dado, ( year (dataC x)) == ano, ( valor x) < 0 ]
 
 main :: IO ()
-main = do
- d <- (eitherDecode <$> getJSON) :: IO (Either String [Transaction])
-
- case d of
-  Left err -> putStrLn err
-  Right ps -> print [x | x <- ps, (valor x) > 10000 ]
+main = hspec $ do
+    describe "filtrarTransacoesPorAno" $ do
+    it "quantidade de transacoes no ano de 2018" $ do
+        d <- (eitherDecode <$> getJSON) :: IO (Either String [Crud.Transaction])
+        case d of
+            Left err -> putStrLn err
+            Right ps -> Prelude.length [x | x <- ps, (year (dataC x)) == 2018 ]  `shouldBe` 1146
